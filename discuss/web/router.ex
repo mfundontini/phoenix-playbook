@@ -21,6 +21,7 @@ defmodule Discuss.Router do
     get "/mock", MockController, :mock
 
     get "/topics/new", TopicController, :new
+    post "/topics/create", TopicController, :create
   end
 
   # Other scopes may use custom stacks.
