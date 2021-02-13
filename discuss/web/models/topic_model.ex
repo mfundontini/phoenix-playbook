@@ -5,7 +5,7 @@ defmodule Discuss.Topic do
         field :title, :string
     end
 
-    def changeset(struct, params // %{}) do
+    def changeset(struct, params \\ %{}) do
         struct
         |> cast(params, [:title])
         |> validate_required([:title])
