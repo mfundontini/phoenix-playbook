@@ -8,8 +8,8 @@ defmodule Discuss.TopicController do
     end
 
     def create(conn, params) do
-        IO.inspect(params)
-        IO.inspect(conn)
+        %{"topic" => topic } = params
+        IO.inspect(topic)
         render conn, "create.html"
     end
 end
