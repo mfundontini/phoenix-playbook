@@ -20,11 +20,15 @@ defmodule Discuss.Router do
 
     get "/mock", MockController, :mock
 
+    # Below routes can be replaced with resources "/topics" TopicController
+    # Provided one follows the CRUD rules of :new, :index, :edit, :create, :delete
+    
     get "/topics/new", TopicController, :new
     get "/topics", TopicController, :index
     get "/topics/:id/edit", TopicController, :edit
     put "/topics/:id", TopicController, :update
     post "/topics/create", TopicController, :create
+    delete "/topics/:id/delete", TopicController, :delete
   end
 
   # Other scopes may use custom stacks.
