@@ -49,4 +49,7 @@ defmodule Discuss.TopicController do
             {:error, changeset} -> render conn, "new.html", changeset: changeset
         end
     end
+
+    def delete(conn, params) do
+    end
 end
