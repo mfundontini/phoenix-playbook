@@ -7,6 +7,17 @@ defmodule Discuss.TopicController do
         render conn, "new.html", changeset: changeset
     end
 
+    def edit(conn, %{"id" => id }) do
+        
+        case Repo.get(Topic, id) do
+            :nil ->
+                render conn, "404.html", id: id
+            topic_struct ->
+                changeset = Topic.changeset(topic_struct)
+                render conn, "edit.html", changeset: changeset
+        end
+    end
+
     def index(conn, _params) do
         topics = Repo.all(Topic)
         render conn, "index.html", topics: topics
