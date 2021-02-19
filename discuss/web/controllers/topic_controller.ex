@@ -8,7 +8,8 @@ defmodule Discuss.TopicController do
     end
 
     def index(conn, _params) do
-        render conn, "index.html"
+        topics = Repo.all(%Topic)
+        render conn, "index.html", topics: topics
     end
 
     def create(conn, %{"topic" => topic }) do
