@@ -2,7 +2,7 @@
   <h2>Edit topic form</h2>
 </div>
 
-<%= form_for @changeset, topic_path(@conn, :update), fn f ->  %>
+<%= form_for @changeset, topic_path(@conn, :update, @topic), fn f ->  %>
   <div class="form-group">
     <%= text_input f, :title, placeholder: "Topic Title", class: "form-control" %>
     <%= error_tag f, :title %>
