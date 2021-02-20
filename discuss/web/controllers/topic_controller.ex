@@ -40,7 +40,7 @@ defmodule Discuss.TopicController do
     end
 
     def create(conn, %{"topic" => topic }) do
-        changeset = conn.assigns.user.id
+        changeset = conn.assigns.user
         |> build_assoc(:topics)
         |> Topic.changeset(topic)
 
