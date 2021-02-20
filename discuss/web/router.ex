@@ -31,6 +31,14 @@ defmodule Discuss.Router do
     delete "/topics/:id/delete", TopicController, :delete
   end
 
+  scope "/auth", Discuss do
+    pipe_through :browser # Use the default browser stack
+
+    get "/:provider/callback", AuthController, :callback
+    get "/:provider", AuthController, :request
+    
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", Discuss do
   #   pipe_through :api
