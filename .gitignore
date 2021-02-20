@@ -28,3 +28,6 @@
 # IDE files
 .vscode/
 
+# env files
+.env.*
+*secret.exs
