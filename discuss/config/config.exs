@@ -31,3 +31,8 @@ config :ueberauth, Ueberauth,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# Configure ueberauth oauth
+config :ueberauth, Ueberauth.Strategy.Github.Oauth,
+  client_id: {:system, "GITHUB_ID"},
+  client_secret: {:system, "GITHUB_SECRET"}
