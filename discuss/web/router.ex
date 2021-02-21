@@ -7,6 +7,7 @@ defmodule Discuss.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Discuss.Plugs.SetUser
   end
 
   pipeline :api do
@@ -35,6 +36,8 @@ defmodule Discuss.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/:provider/callback", AuthController, :callback
+    # sign-out before :provider since provider will *wildcard the sign-out string
+    get "/sign-out", AuthController, :sign_out
     get "/:provider", AuthController, :request
     
   end

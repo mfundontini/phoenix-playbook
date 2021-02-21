@@ -23,6 +23,13 @@ defmodule Discuss.AuthController do
         end
     end
 
+    def sign_out(conn, _params) do
+        conn
+        |> configure_session(drop: true)
+        |> put_flash(:info, "User logged out")
+        |> redirect(to: topic_path(conn, :index))
+    end
+
     defp sign_in(conn, changeset) do
         case insert_or_update_user(changeset) do
             {:ok, user} ->

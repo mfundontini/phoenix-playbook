@@ -2,6 +2,9 @@ defmodule Discuss.TopicController do
     use Discuss.Web, :controller
     alias Discuss.Topic
 
+    plug Discuss.Plugs.RequireAuth when action in [:new, :edit, :update, :create, :delete]
+    plug :check_post_owner when action in [:edit, :update, :delete]
+
     def new(conn, _params) do
         changeset = Topic.changeset(%Topic{}, %{})
         render conn, "new.html", changeset: changeset
@@ -38,8 +41,11 @@ defmodule Discuss.TopicController do
     end
 
     def create(conn, %{"topic" => topic }) do
-        changeset = Topic.changeset(%Topic{}, topic)
+        changeset = conn.assigns.user
+        |> build_assoc(:topics)
+        |> Topic.changeset(topic)
 
+        
         case Repo.insert(changeset) do
             {:ok, post} ->
                 %Topic{title: title} = post
@@ -57,5 +63,19 @@ defmodule Discuss.TopicController do
         conn 
         |> put_flash(:info, "Topic #{id} deleted.")
         |> redirect(to: topic_path(conn, :index))
+    end
+
+    def check_post_owner(conn, _params) do
+        %{params: %{"id" => id}} = conn
+        user_id = conn.assigns.user.id
+
+        if Repo.get(Topic, id).user_id == user_id do
+            conn
+        else
+            conn
+            |> put_flash(:error, "You cannot edit this.")
+            |> redirect(to: topic_path(conn, :index))
+            |> halt
+        end
     end
 end
