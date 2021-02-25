@@ -19,6 +19,7 @@
     <%= if @conn.assigns.user do %>
       window.userToken = "<%= Phoenix.Token.sign(Discuss.Endpoint, 'key', @conn.assigns.user.id) %>"
     <% end%>
+    
   </head>
 
   <body>
