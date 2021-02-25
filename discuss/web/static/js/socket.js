@@ -61,10 +61,10 @@ const createTopicSocket = (topicId) => {
     .receive("ok", resp => { console.log("Joined successfully", resp);})
     .receive("error", resp => { console.log("Unable to join", resp);});
 
-  document.querySelector('.test-button').addEventListener('click', function(){
+  document.querySelector('#add-topic-button').addEventListener('click', function(){
     channel.push('comments:hello', {message: 'Some test data.'});
   });
-  
+
 };
 
 window.createTopicSocket = createTopicSocket;
