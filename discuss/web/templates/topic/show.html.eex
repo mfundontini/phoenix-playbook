@@ -1,0 +1,3 @@
+<div class="jumbotron">
+  <h2><%= @topic.title %></h2>
+</div>
