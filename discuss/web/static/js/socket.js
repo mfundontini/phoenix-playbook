@@ -59,7 +59,7 @@ const createTopicSocket = (topicId) => {
 
   channel.join()
     .receive("ok", resp => {
-      renderComments(resp);
+      renderComments(resp.comments);
     })
     .receive("error", resp => { console.log("Unable to join", resp);});
 
@@ -71,13 +71,13 @@ const createTopicSocket = (topicId) => {
 };
 
 function renderComments(comments) {
-  commentsHTML = comments.map(comment => {
+  const commentsHTML = comments.map(comment => {
     return `
-    <li class="collection-item>
+    <li class="collection-item">
       ${comment.content}
     </li>`;
   });
-
+  console.log(commentsHTML.join(""));
   document.querySelector('#comments').innerHTML = commentsHTML.join("");
 }
 
