@@ -8,7 +8,7 @@ defmodule Discuss.CommentsChannel do
             :nil ->
                 {:error, %{error: "Could not join topic #{pk}"}, socket}
             topic_struct ->
-                {:ok, %{message: "Successfully joined topic #{topic_struct.id}"}, socket}
+                {:ok, %{message: "Successfully joined topic #{topic_struct.id}"}, assign(socket, :topic, topic_struct)}
         end
         {:ok, %{message: "just joined"}, socket}
     end
