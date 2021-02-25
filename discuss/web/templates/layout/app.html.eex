@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <%= if @conn.assigns.user do %>
+      <%= Phoenix.Token.sign(Discuss.Endpoint, "key", @conn.assigns.user.id) %>
+    <% end%>
   </head>
 
   <body>
