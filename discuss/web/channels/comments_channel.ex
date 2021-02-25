@@ -8,13 +8,14 @@ defmodule Discuss.CommentsChannel do
         |> Repo.get(pk)
         |> Repo.preload(:comments)
 
+        IO.inspect topic
+
         case topic do
             :nil ->
                 {:error, %{error: "Could not join topic #{pk}"}, socket}
             topic_struct ->
-                {:ok, %{comments: topic_id.comments}, assign(socket, :topic, topic_struct)}
+                {:ok, %{comments: topic_struct.comments}, assign(socket, :topic, topic_struct)}
         end
-        {:ok, %{message: "just joined"}, socket}
     end
 
     def handle_in(name, %{"content" => content}, socket) do
