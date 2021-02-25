@@ -6,7 +6,7 @@ defmodule Discuss.CommentsChannel do
         
         topic = Discuss.Topic
         |> Repo.get(pk)
-        |> Repo.preload(:comments)
+        |> Repo.preload(comments: [:user])
 
         IO.inspect topic
 
@@ -20,8 +20,9 @@ defmodule Discuss.CommentsChannel do
 
     def handle_in(name, %{"content" => content}, socket) do
         topic = socket.assigns.topic
+        user_id = socket.assigns.user_id
         changeset = topic
-        |> build_assoc(:comments)
+        |> build_assoc(:comments, user_id: user_id)
         |> Discuss.Comment.changeset(%{content: content})
 
         case Repo.insert(changeset) do

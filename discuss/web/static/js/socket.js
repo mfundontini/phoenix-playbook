@@ -84,7 +84,7 @@ function renderComments(comments) {
 function commentTemplate(comment) {
   return `
     <li class="collection-item">
-      ${comment.content}
+      ${comment.content} <span class="right"><b>${comment.user.nickname}</b></span>
     </li>`;
 }
 
