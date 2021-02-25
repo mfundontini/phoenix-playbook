@@ -18,7 +18,6 @@ defmodule Discuss.CommentsChannel do
     end
 
     def handle_in(name, %{"content" => content}, socket) do
-        IO.inspect message
         topic = socket.assigns.topic
         changeset = topic
         |> build_assoc(:comments)
