@@ -20,6 +20,15 @@ defmodule Discuss.TopicController do
         end
     end
 
+    def show(conn, %{"id" => id }) do
+        case Repo.get(Topic, id) do
+            :nil ->
+                render conn, "404.html", id: id
+            topic_struct ->
+                render conn, "show.html", topic: topic_struct
+        end
+    end
+
     def update(conn, %{"id" => id, "topic" => topic }) do
 
         old = Repo.get(Topic, id)
