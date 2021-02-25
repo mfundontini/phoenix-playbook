@@ -6,7 +6,7 @@ defmodule Discuss.CommentsChannel do
         
         topic = Discuss.Topic
         |> Repo.get(pk)
-        |> Repo.preload(:comments)
+        |> Repo.preload(comments: [:user])
 
         IO.inspect topic
 
