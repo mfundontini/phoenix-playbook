@@ -62,7 +62,8 @@ const createTopicSocket = (topicId) => {
     .receive("error", resp => { console.log("Unable to join", resp);});
 
   document.querySelector('#add-topic-button').addEventListener('click', function(){
-    channel.push('comments:hello', {message: 'Some test data.'});
+    const content = document.querySelector('#add-topic-area').value;
+    channel.push('comments:add', {content: content});
   });
 
 };
