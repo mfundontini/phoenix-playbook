@@ -5,6 +5,7 @@
 <div class="input-field">
   <textarea id="add-topic-area" class="materialize-textarea"></textarea>
   <button id="add-topic-button">Add Comment</button>
+  <ul id="comments" class="collection"></ul>
 </div>
 
 <script>
