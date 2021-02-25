@@ -23,7 +23,7 @@ defmodule Discuss.CommentsChannel do
         |> build_assoc(:comments)
         |> Discuss.Comment.changeset(%{content: content})
 
-        case Repo.inspect(changeset) do
+        case Repo.insert(changeset) do
             {:ok, comment} ->
                 {:reply, :ok, socket}
             {:error, _reason} ->
