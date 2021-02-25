@@ -31,3 +31,6 @@
 # env files
 .env.*
 *secret.exs
+
+# jshint config
+.jshintrc

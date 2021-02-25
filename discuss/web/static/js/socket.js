@@ -3,9 +3,9 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/my_app/endpoint.ex":
-import {Socket} from "phoenix"
+import {Socket} from "phoenix";
 
-let socket = new Socket("/socket", {params: {token: window.userToken}})
+let socket = new Socket("/socket", {params: {token: window.userToken}});
 
 // When you connect, you'll often need to authenticate the client.
 // For example, imagine you have an authentication plug, `MyAuth`,
@@ -51,12 +51,46 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 
-socket.connect()
+socket.connect();
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+const createTopicSocket = (topicId) => {
+  // Now that you are connected, you can join channels with a topic:
+  let channel = socket.channel(`comments:${topicId}`, {});
 
-export default socket
+  channel.join()
+    .receive("ok", resp => {
+      renderComments(resp.comments);
+    })
+    .receive("error", resp => { console.log("Unable to join", resp);});
+
+  document.querySelector('#add-topic-button').addEventListener('click', function(){
+    const content = document.querySelector('#add-topic-area').value;
+    channel.push('comments:add', {content: content});
+  });
+
+  channel.on(`comments:${topicId}:new`, renderComment);
+
+};
+
+function renderComments(comments) {
+  const commentsHTML = comments.map(comment => {
+    return commentTemplate(comment);
+  });
+
+  document.querySelector('#comments').innerHTML = commentsHTML.join("");
+  document.querySelector('#add-topic-area').value = "";
+}
+
+function commentTemplate(comment) {
+  return `
+    <li class="collection-item">
+      ${comment.content}
+    </li>`;
+}
+
+function renderComment(event) {
+  document.querySelector('#comments').innerHTML += commentTemplate(event.comment);
+  document.querySelector('#add-topic-area').value = "";
+}
+
+window.createTopicSocket = createTopicSocket;
