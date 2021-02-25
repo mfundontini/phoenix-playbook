@@ -3,8 +3,12 @@ defmodule Discuss.CommentsChannel do
 
     def join("comments:" <> topic_id, _auth, socket) do
         pk = String.to_integer(topic_id)
+        
+        topic = Discuss.Topic
+        |> Repo.get(pk)
+        |> Repo.preload(:comments)
 
-        case Repo.get(Discuss.Topic, pk) do
+        case topic do
             :nil ->
                 {:error, %{error: "Could not join topic #{pk}"}, socket}
             topic_struct ->
