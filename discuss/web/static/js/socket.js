@@ -68,17 +68,29 @@ const createTopicSocket = (topicId) => {
     channel.push('comments:add', {content: content});
   });
 
+  channel.on(`comments:${topicId}:new`, renderComment);
+
 };
 
 function renderComments(comments) {
   const commentsHTML = comments.map(comment => {
-    return `
+    return commentTemplate(comment);
+  });
+
+  document.querySelector('#comments').innerHTML = commentsHTML.join("");
+  document.querySelector('#add-topic-area').value = "";
+}
+
+function commentTemplate(comment) {
+  return `
     <li class="collection-item">
       ${comment.content}
     </li>`;
-  });
-  console.log(commentsHTML.join(""));
-  document.querySelector('#comments').innerHTML = commentsHTML.join("");
+}
+
+function renderComment(event) {
+  document.querySelector('#comments').innerHTML += commentTemplate(event.comment);
+  document.querySelector('#add-topic-area').value = "";
 }
 
 window.createTopicSocket = createTopicSocket;
